@@ -1,0 +1,115 @@
+@font-face {
+    font-family: "fontawesome-webfont"; 
+    src: url("./fonts/fontawesome-webfont.ttf") format("truetype"); 
+} 
+/* Обнуление */
+* {
+    margin: 0;
+    padding: 0;
+}
+h1,h2,h3,h4,h5,h6 {
+    text-align: center;
+}
+h1 {font-size: 36px;}
+h2,h3 {font-size: 24px;}
+
+/* Контейнер */
+.container {
+    margin: 0 auto;
+    width: 50%;
+}
+
+/* Стилизация: ШАГИ */
+.container .calc__steps {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 0 30px 0;
+}
+.calc__steps ul li {
+    list-style-type: none;
+}
+.calc__step {
+    width: 80%;
+}
+.calc__step ul li::after {
+    content: '\f061';
+    font-family: fontawesome-webfont;
+    color: #999999;
+    display: inline-block;
+    font-size: 14px;    
+    padding-left: 10px;
+}
+.calc__step ul li:last-child::after {
+    display: none;
+}
+.calc__step ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.calc__price {
+    width: 25%;
+    color: #489829;    
+    font-size: 20px;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* Стилизация: СЕКЦИЯ */
+.calc__section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Стилизация: РАЗМЕРЫ и прочее*/
+.calc__section input[type="text"], select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 6px;
+    border: 1px solid #bdbdbd;
+    color: #4B4D4B;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    width: 245px;
+    height: 30px;
+}
+.calc__section input[type="text"]:focus, select:focus {
+    border: 1px solid #489829; 
+}
+.calc__grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.calc__block {
+    display: flex;
+    flex-direction: column;    
+}
+.calc__field-title {
+    font-size: 18px;
+    margin: 5px 0 2px 0;
+}
+.calc__btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    padding-top: 10px;  
+    margin-top: 10px; 
+}
+/* Кнопка */
+.btn {
+    font-size: 18px;
+    background-color: #489829;
+    color: #fff;
+    padding: 5px 30px 5px 30px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.btn.disable {
+    background-color: #fff;
+    color: #999999;
+}

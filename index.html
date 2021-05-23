@@ -4,9 +4,283 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бани</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Калькулятор расчета стоимости каркасной бани</title>
 </head>
 <body>
-    <h1>Проектирование бани</h1>
+    <div class="container">
+        <h1>Калькулятор стоимости каркасной бани</h1>
+        <div class="calc">
+            <!-- Тут будет картинка на основе canvas -->
+
+            <!-- ШАГИ КАЛЬКУЛЯТОРА -->
+            <div class="calc__steps">
+                <div class="calc__step">
+                    <ul>
+                        <li>Размеры</li>
+                        <li>Обшивка</li>
+                        <li>Полки</li>
+                        <li>Печь</li>
+                        <li>Плитка</li>
+                        <li>Опции</li>
+                    </ul>   
+                </div>
+                <div class="calc__price">500000 р.</div>         
+            </div> 
+            <!-- ФОРМА КАЛЬКУЛЯТОРА -->            
+            <div class="calc__form">
+                <!-- РАЗМЕРЫ -->
+                <div class="calc__section">
+                    <div class="calc__grid">
+                        <div class="calc__block">
+                            <div class="calc__field-title">Длина (м):</div>
+                            <div><input type="text" placeholder="3" value="3"></div>
+                        </div>
+                        <div class="calc__block">
+                            <div class="calc__field-title">Ширина (м):</div>
+                            <div><input type="text" placeholder="2" value="2"></div>
+                        </div>
+                        <div class="calc__block">
+                            <div class="calc__field-title">Высота (м):</div>
+                            <div><input type="text" placeholder="3" value="3"></div>
+                        </div>
+                    </div>
+                    <div class="calc__btn">
+                        <button id="btn-prev" class="btn disable" type="btn">Назад</button>
+                        <button id="btn-next" class="btn" type="btn">Далее</button>
+                    </div>
+                </div>
+                <!-- ОБШИВКА -->
+                <div class="calc__section">
+                    <div class="calc__grid">
+                        <div class="calc__block">
+                            <div class="calc__field-title">Обшивка стен:</div>
+                            <div>
+                                <select class="select" name="" id="">
+                                    <option value="">Абаш (горизонтально)</option>
+                                    <option value="">Абаш (вертикально)</option>
+                                    <option value="">Кедр (горизонтально)</option>
+                                    <option value="">Кедр (вертикально)</option>
+                                    <option value="">Липа (горизонтально)</option>
+                                    <option value="">Липа (вертикально)</option>
+                                    <option value="">Осина (горизонтально)</option>
+                                    <option value="">Осина (вертикально)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="calc__block">
+                            <div class="calc__field-title">Обшивка потолка:</div>
+                            <div>
+                                <select name="" id="">
+                                    <option value="">Абаш</option>
+                                    <option value="">Кедр</option>
+                                    <option value="">Липа</option>
+                                    <option value="">Осина</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="calc__block">
+                            <div class="calc__field-title">Дверь:</div>
+                            <div>
+                                <select name="" id="">
+                                    <option value="">Бронза</option>
+                                    <option value="">Сатин</option>
+                                    <option value="">С рисунком</option>
+                                    <option value="">Фотопечать</option>
+                                    <option value="">Деревянная</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="calc__btn">
+                        <button id="btn-prev" class="btn disable" type="btn">Назад</button>
+                        <button id="btn-next" class="btn" type="btn">Далее</button>
+                    </div>
+                </div>
+                <!-- ПОЛКИ -->
+                <div class="calc__section">
+                    <div class="calc__grid">
+                        <div class="calc__block">
+                            <div class="calc__field-title">Форма полок:</div>
+                            <div>
+                                <select class="select" name="" id="">
+                                    <option value="">Прямые</option>
+                                    <option value="">Г-образные</option>
+                                    <option value="">П-образные</option>
+                                    <option value="">Парящие</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="calc__block">
+                            <div class="calc__field-title">Материал полок:</div>
+                            <div>
+                                <select name="" id="">
+                                    <option value="">Абаш</option>
+                                    <option value="">Термоабаш</option>
+                                    <option value="">Канадский кедр</option>
+                                    <option value="">Ольха</option>
+                                    <option value="">Термососна</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="calc__block">
+                            <div class="calc__field-title">Спинка:</div>
+                            <div>
+                                <select name="" id="">
+                                    <option value="">Абаш</option>
+                                    <option value="">Канадский кедр</option>
+                                    <option value="">Ольха</option>
+                                    <option value="">Термососна</option>                           
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="calc__btn">
+                        <button id="btn-prev" class="btn disable" type="btn">Назад</button>
+                        <button id="btn-next" class="btn" type="btn">Далее</button>
+                    </div>
+                </div>
+                <!-- Печь -->
+                <div class="calc__section">
+                    <div class="calc__grid">
+                        <div class="calc__block">
+                            <div class="calc__field-title">Тип печи:</div>
+                            <div>
+                                <select class="select" name="" id="">
+                                    <option value="">Электрическая</option>
+                                    <option value="">Дровяная</option>                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="calc__block">
+                            <div class="calc__field-title">Вид печи:</div>
+                            <div>
+                                <select name="" id="">
+                                    <option value="">Напольная прямоугольная</option>
+                                    <option value="">Напольная электрическая</option>
+                                    <option value="">Настенная</option>
+                                </select>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="calc__btn">
+                        <button id="btn-prev" class="btn disable" type="btn">Назад</button>
+                        <button id="btn-next" class="btn" type="btn">Далее</button>
+                    </div>
+                </div>
+                <!-- Плитка -->
+                <div class="calc__section">
+                    <div class="calc__grid">
+                        <div class="calc__block">
+                            <div class="calc__field-title">Облицовка плиткой:</div>
+                            <div>
+                                <select class="select" name="" id="">
+                                    <option value="">Не выбрана</option>
+                                    <option value="">Талькохлорит</option>
+                                    <option value="">Змеевик</option>
+                                    <option value="">Рваный камень</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="calc__block">
+                            <div class="calc__field-title">Гималайская соль:</div>
+                            <div>
+                                <select name="" id="">
+                                    <option value="">Не выбрана</option>
+                                    <option value="">За печкой</option>
+                                    <option value="">У двери</option>
+                                    <option value="">Настенная</option>                                    
+                                </select>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="calc__btn">
+                        <button id="btn-prev" class="btn disable" type="btn">Назад</button>
+                        <button id="btn-next" class="btn" type="btn">Далее</button>
+                    </div>
+                </div>
+                <!-- Опции -->
+                <div class="calc__section">
+                    <div class="calc__grid">
+                        <div class="calc__block">
+                            <div class="calc__field-title">Освещение:</div>
+                            <div>
+                                <select class="select" name="" id="">
+                                    <option value="">Светильник Германия</option>
+                                    <option value="">Светильник Финляндия</option>
+                                    <option value="">Светильник с абажуром</option>
+                                    <option value="">Цветотерапия(с пультом)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="calc__block">
+                            <div class="calc__field-title">Аксессуары:</div>
+                            <div>
+                                <select name="" id="">
+                                    <option value="">Аксессуары Harvia</option>
+                                    <option value="">Аксессуары дерево</option>                                                          
+                                </select>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="calc__btn">
+                        <button id="btn-prev" class="btn disable" type="btn">Назад</button>
+                        <button id="btn-next" class="btn" type="btn">Далее</button>
+                    </div>
+                </div>
+                <!-- Заявка -->
+                <div class="calc__section">
+                    <h2>Расчет стоимости сауны</h2>
+                    <div class="calc__grid">                        
+                        <div class="calc__block">  
+                            <h3>Размеры</h3>
+                            <div>Длина:</div>
+                            <div>Ширина:</div>
+                            <div>Высота:</div>
+
+                            <h3>Обшивка</h3>
+                            <div>Стены:</div>
+                            <div>Потолок:</div>
+                            <div>Дверь:</div>
+
+                            <h3>Полки</h3>
+                            <div>Прямые:</div>
+                            <div>Обшивка:</div>
+                            <div>Спинка:</div>
+
+                            <h3>Печь</h3>
+                            <div>Тип печи:</div>
+                            <div>Вид печи:</div>
+
+                            <h3>Дополнительно</h3>
+                            <div>Освещение:</div>
+                            <div>Аксессуары:</div>
+
+                            <h3>Стоимость материалов:</h3>
+                            <h3>Стоимость работ:</h3>
+                            <h3>ИТОГО:</h3>
+                        </div>
+                        <div class="calc__block">
+                            <h3>Отправьте заявку!</h3>
+
+                            <div class="calc__field-title">Представьтесь:</div>
+                            <div><input type="text"></div>
+                            <div class="calc__field-title">E-mail:</div>
+                            <div><input type="text"></div>
+                            <div class="calc__field-title">Телефон:</div>
+                            <div><input type="text"></div>
+                            <div class="calc__field-title">Комментарий:</div>
+                            <div><input type="text"></div>
+
+                            <div class="calc__btn">
+                                <button class="btn" type="button" onclick="sendRequest()">Отправить</button>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <script src="script.js"></script>    
 </body>
 </html>
