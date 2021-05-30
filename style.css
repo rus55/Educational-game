@@ -7,7 +7,7 @@
     margin: 0;
     padding: 0;
 }
-h1,h2,h3,h4,h5,h6 {
+h1,h2 {
     text-align: center;
 }
 h1 {font-size: 36px;}
@@ -18,7 +18,11 @@ h2,h3 {font-size: 24px;}
     margin: 0 auto;
     width: 50%;
 }
+.calc-photos {
+    margin: 0 auto;
+    width: 780px;
 
+}
 /* Стилизация: ШАГИ */
 .container .calc__steps {
     display: flex;
@@ -29,6 +33,26 @@ h2,h3 {font-size: 24px;}
 }
 .calc__steps ul li {
     list-style-type: none;
+    flex: 1;
+}
+
+.step li{
+    height: 30px;
+    padding-top: 8px;
+    margin-right: 5px;
+    padding-left: 10px;
+    border-radius: 0 15px 15px 0;
+    color: #000;
+}
+li.parent {   
+    background: #2c8900; 
+    color: #fff;         
+}
+.step li:first-child{
+    background: #2c8900;           
+    height: 30px;
+    padding-top: 8px;
+    color: #fff;
 }
 .calc__step {
     width: 80%;
@@ -50,11 +74,17 @@ h2,h3 {font-size: 24px;}
     justify-content: space-between;
 }
 .calc__price {
-    width: 25%;
-    color: #489829;    
+    width: 20%;
+    color: #2c8900;    
     font-size: 20px;
     font-weight: 700;
-    text-align: right;
+    text-align: right;    
+    height: 30px;
+    padding-top: 8px;
+    padding-right: 10px;
+    border: 1px solid #2c8900;
+    border-radius: 15px 0 0 15px;
+    
 }
 
 /* Стилизация: СЕКЦИЯ */
@@ -113,3 +143,8 @@ h2,h3 {font-size: 24px;}
     background-color: #fff;
     color: #999999;
 }
+/* Класс, который будет скрывать секции */
+.hidden {
+    display: none;
+}
+/*  */
