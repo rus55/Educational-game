@@ -20,16 +20,20 @@ h2,h3 {font-size: 24px;}
 }
 .calc-photos {
     margin: 0 auto;
-    width: 780px;
-
+    width: 680px;/* было 780px */
+    position: relative;
 }
+.calc-photos img {
+    width: 100%;
+}
+
 /* Стилизация: ШАГИ */
 .container .calc__steps {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin: 30px 0 30px 0;
+    margin: 0px 0 15px 0;
 }
 .calc__steps ul li {
     list-style-type: none;
@@ -37,8 +41,8 @@ h2,h3 {font-size: 24px;}
 }
 
 .step li{
-    height: 30px;
-    padding-top: 8px;
+    height: 28px;
+    padding-top: 6px;
     margin-right: 5px;
     padding-left: 10px;
     border-radius: 0 15px 15px 0;
@@ -50,8 +54,8 @@ li.parent {
 }
 .step li:first-child{
     background: #2c8900;           
-    height: 30px;
-    padding-top: 8px;
+    height: 28px;
+    padding-top: 6px;
     color: #fff;
 }
 .calc__step {
@@ -119,7 +123,7 @@ li.parent {
     flex-direction: column;    
 }
 .calc__field-title {
-    font-size: 18px;
+    font-size: 16px;
     margin: 5px 0 2px 0;
 }
 .calc__btn {
@@ -131,7 +135,7 @@ li.parent {
 }
 /* Кнопка */
 .btn {
-    font-size: 18px;
+    font-size: 14px;
     background-color: #489829;
     color: #fff;
     padding: 5px 30px 5px 30px;
@@ -147,4 +151,10 @@ li.parent {
 .hidden {
     display: none;
 }
-/*  */
+/* Для контейнера всех дополнительных картинок прописываем стили */
+/* Блок - див для картинок */
+#details {
+    position: absolute;
+    top: 0;    
+    width: 100%;
+}

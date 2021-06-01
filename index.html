@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Калькулятор расчета стоимости каркасной бани</title>
+    <title>Калькулятор расчета стоимости парной в бане</title>
 </head>
 <body>
     <div class="container">
@@ -14,6 +14,7 @@
             <!-- КАРТИНКИ -->
             <div class="calc-photos">
                 <img src="images/dimensions.jpg" alt="">
+                <div id="details"></div>
             </div>                
             <!-- ШАГИ КАЛЬКУЛЯТОРА -->
             <div class="calc__steps">
@@ -110,7 +111,7 @@
                             <div>
                                 <select class="select" name="" id="materialShelv">
                                     <option value="1">Абаш</option>
-                                    <option value="2">Термоабаш</option>
+                                    <option value="2">Абаш + Термоабаш</option>
                                     <option value="3">Канадский кедр</option>
                                     <option value="4">Ольха</option>
                                     <option value="5">Термососна</option>
@@ -147,8 +148,7 @@
                             <div>
                                 <select class="select" name="" id="viewStove">
                                     <option value="1">Напольная прямоугольная</option>
-                                    <option value="2">Напольная электрическая</option>
-                                    <option value="3">Настенная</option>
+                                    <option value="2">Напольная цилиндрическая</option>                                    
                                 </select>
                             </div>
                         </div>                        
