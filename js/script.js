@@ -479,10 +479,3 @@ btnNext.addEventListener('click', function() {
     }
 });
 calcPrice();
-
-/* CANVAS */
-
-/* <canvas id="canvas" width="780" height="585"></canvas>
-let canvas = document.querySelector('#canvas');
-let ctx = canvas.getContext('2d'); 
-*/

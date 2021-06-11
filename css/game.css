@@ -1,0 +1,91 @@
+@font-face {
+    font-family: "fontawesome-webfont"; 
+    src: url("./fonts/fontawesome-webfont.ttf") format("truetype"); 
+} 
+/* Обнуление */
+* {
+    margin: 0;
+    padding: 0;
+}
+h1,h2 {
+    text-align: center;
+}
+h1 {font-size: 36px;}
+h2,h3 {font-size: 24px;}
+
+#steamroom {    
+    width: 1579px;
+    height: 700px;
+    margin: 0 auto;
+    background: url('../images/game/steamroom.jpg') no-repeat scroll center center /contain;
+}
+#h1 {
+    color: white;
+}
+#journal {
+    position: absolute;
+    width: 300px;
+    min-height: 300px;
+    left: 350px;
+    top: 60px;
+    background: rgba(255,255,235,0.6);
+    padding: 10px;
+    border-radius: 5px;    
+}
+#currentParams {
+    position: absolute;
+    width: 250px;
+    right: 350px;
+    top: 60px;
+    background: rgba(255,255,235,0.6);
+    padding: 10px;
+    border-radius: 5px;    
+}
+#currentParams p{
+    display: flex;
+    justify-content: space-between;
+}
+#heater {  
+    width: 128px;
+    height: 140px;
+    /* background: rgba(255,255,235,0.2); */
+    position: absolute;
+    top: 270px;
+    left: 733px;  
+} 
+#stove {  
+    width: 115px;
+    height: 95px;
+    /* background: rgba(255,255,235,0.2); */
+    position: absolute;
+    top: 422px;
+    left: 750px;  
+} 
+.flame {
+    padding-left: 3px;
+    padding-top: 3px;
+    width: 109px;
+    height: 90px;
+    transform: rotate(-0.5deg);
+}
+#woods {
+    width: 200px;
+    height: 200px;    
+}
+.log {
+    position: absolute;
+    top: 543px;
+    left: 686px;
+    width: 100px;
+}
+.bark {
+    position: absolute;
+    top: 543px;
+    left: 865px;
+    width: 100px;
+}
+.water {
+    position: absolute;
+    top: 395px;
+    left: 1033px;
+}
