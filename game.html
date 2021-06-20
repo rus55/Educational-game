@@ -8,18 +8,19 @@
     <title>Онлайн - программа обучения растопки печи в бане</title>
 </head>
 <body>     
-    <div id="steamroom">
-        <h1 id="h1">Программа обучения растопки печи в бане</h1>   
+    <div id="steamroom">       
+        
         <div id="gameRules">
+            <h1 >Программа обучения растопки печи в бане</h1> 
             <p>Добро пожаловать в обучающую игру, предназначенную научить Вас достигать желаемых параметров при растопке бани!</p>
             <p>Вы можете оперировать 3 (тремя) инструментами:</p>
             <ul>
-                <li>Подкинуть полено в печь</li>
-                <li>Подкинуть бересту в печь</li>
-                <li>Подлить воды на каменку</li>
+                <li>Подкинуть полено в печь;</li>
+                <li>Подкинуть бересту в печь;</li>
+                <li>Подлить воды на каменку.</li>
             </ul>
             <p>Каждый инструмент изменяет параметры температуры и влажности в парной бани, а также занимает разный промежуток по времени.</p>
-            <p>Вам необходимо выстроить алгоритм использования всех 3 инструментов оптимальным образом, чтобы за заданное время достичь заданной температуры и влажности и при этом не превысить ни один из параметров более, чем на 10%.</p>
+            <p>Вам необходимо выстроить алгоритм использования всех 3 инструментов оптимальным образом, чтобы за заданное время достичь необходимой температуры и влажности и при этом не превысить ни один из параметров более, чем на 10%.</p>
             <p>Желаем удачи!</p>
             <label>Желаемая температура</label>
             <select id="likeTemp">
@@ -38,8 +39,10 @@
             <button id="btnStartGame">Начать игру!</button>
         </div>     
         <div id="game" style="display: none;">
+            <h1>Программа обучения растопки печи в бане</h1> 
             <div id="journal"><!-- Журнал растопки -->
                 <h2>Журнал растопки</h2>
+                <div class="journalTableBox">
                 <table id="journalTable">
                     <tr>
                         <th>Шаг</th>
@@ -48,19 +51,21 @@
                         <th>Time,мин</th>
                     </tr>
                 </table>
+                </div>
             </div>
             <div id="currentParams"></div><!-- Текущие параметры растопки -->
             <div id="heater"></div><!-- Каменка -->
+            <div id="stoveRigth" style="display: none;"><img src="images/arrow.gif" alt=""></div>
+            <div id="stoveLeft" style="display: none;"><img src="images/arrow.gif" alt=""></div>
             <div id="stove"><img class="flame" src="images/game/flame.gif" alt="Пламя"></div><!-- Печь -->
             <div id="woods"><img class="log" src="images/game/log.png" alt="Полено"></div>        
-                            <img class="bark" src="images/game/bark.png" alt="Береста" title="Береста"> 
+                            <img class="bark" src="images/game/bark.png" alt="Береста"> 
                             <img class="water" src="images/game/water.png" alt="Вода">
-            <audio id="woods" autoplay="autoplay" src="sounds/sound-burning-woods.mp3"></audio>
-            <div id="audio"></div>     
-            <div id="gameResult" ></div> 
-         </div>
-        
-    </div>
+                            <audio autoplay="autoplay" src="sounds/sound-burning-woods.mp3"></audio>
+            <div id="audio"></div>                 
+            <div id="gameResult"></div> 
+         </div>        
+    </div>        
     <script src="js/game.js"></script> 
 </body>
 </html>

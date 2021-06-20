@@ -3,7 +3,7 @@
 let bestAlgoritm = {};
 
 //Условия окончания игры
-let rTime = 90;//время
+let rTime = 20;//время
 let rWetness = 60;//влажность
 let rTemp = 60;//температура
 
@@ -13,82 +13,48 @@ const rWoods = 20; //количество дров для растопки
 const rBark = 5; //количество горстей бересты для растопки
 
 const fireWithoutWoods = 30; //кол-во минут, через которое огонь погаснет если не подкидывать дрова
-const fallibility = 1.1; // погрешность на которую можно превысить показатели
+const fallibility = 1.1; // погрешность, на которую можно превысить показатели
 
 //Текущие показатели
-let timeGameStart = new Date();
 let currentTemp = 20;
 let currentTime = 0;
-let currentWet = 0;
+let currentWet = 20;
 let currentCostWoods = 0;
 let currentCostBark = 0;
 let currentCostWater = 0;
 let currentTimeWithoutWoods = 0;
 let waterOnFire = false;
 
-
-
 /* Правила роста температуры и влажности */
 const rules = {
-  before40: {//и для влажности, и для температуры
-      poleno: {
-        temp: 3,
-        time: 10,
-        wet: 1
-      },
-      bark: {
-        temp: 3,
-        time: 5,
-        wet: 2
-      },
-      water: {
-        temp: 5,
-        time: 5,
-        wet: 5
-      }
+  before40: {
+    poleno: {temp: 3, time: 10, wet: 1},
+    bark: {temp: 3, time: 5, wet: 2},
+    water: {temp: 5, time: 5, wet: 5}
   },
   between40_60: {
-    poleno: {
-      temp: 4,
-      time: 10,
-      wet: 2
-    },
-    bark: {
-      temp: 5,
-      time: 5,
-      wet: 3
-    },
-    water: {
-      temp: 6,
-      time: 4,
-      wet: 6
-    }
+    poleno: {temp: 4, time: 10, wet: 2},
+    bark: {temp: 5, time: 5, wet: 3},
+    water: {temp: 6, time: 4, wet: 6}
   },
   after60: {
-    poleno: {
-      temp: 5,
-      time: 8,
-      wet: 3
-    },
-    bark: {
-      temp: 5,
-      time: 4,
-      wet: 4
-    },
-    water: {
-      temp: 6,
-      time: 2,
-      wet: 8
-    }
+    poleno: {temp: 5, time: 8, wet: 3},
+    bark: {temp: 5, time: 4, wet: 4},
+    water: {temp: 6, time: 2, wet: 8}
   }
 }
 
-drawCurrentParams();
-//Вывод текущих результатов
+
+
+//Вывод текущих результатов в game.html
 function drawCurrentParams() {
   const headerParam = document.createElement('h2');
   headerParam.innerHTML = 'Текущие параметры';
   headerParam.className = 'headerParam';
+
+  const timeCondition = document.createElement('p');
+  timeCondition.innerHTML = 'Вам дано ' + rTime + 'мин.';
+  timeCondition.style = 'display: block; font-style: italic;margin: 0 auto;text-align: center;'
 
   const currentTempEl = document.createElement('p');
   currentTempEl.innerHTML = `Температура: <span>${currentTemp}</span>`;
@@ -111,14 +77,14 @@ function drawCurrentParams() {
   const currentParams = document.querySelector('#currentParams');
   currentParams.innerHTML = '';
 
-  currentParams.append(headerParam, currentTempEl, currentTimeEl, currentWetEl, currentCostWoodsEl, currentCostBarkEl, currentCostWaterEl);  
+  currentParams.append(headerParam, timeCondition, currentTempEl, currentTimeEl, currentWetEl, currentCostWoodsEl, currentCostBarkEl, currentCostWaterEl);  
   checkGameOver();  
 }
 
 //Вывод текущих результатов
 function drawResultParams() {
   const headerParam = document.createElement('h2');
-  headerParam.innerHTML = 'Результирующие параметры';
+  headerParam.innerHTML = 'Результирующие параметры';//Проверь !!!
   headerParam.className = 'headerParam';
 
   const currentTempEl = document.createElement('p');
@@ -182,19 +148,28 @@ function checkGameOver() {
   let text = '';
   //проверка на потухший огонь в печке
   if (currentTimeWithoutWoods >= fireWithoutWoods || waterOnFire) {
-    text = 'Вы проиграли! Огонь в печке погас...';
+    text = '<h3>Вы проиграли! Огонь в печке погас...</h3>';
     document.querySelector('.flame').src = 'images/game/ugli.jpg';
   }
   /* Проверка на выигрыш */
   if (currentTime <= rTime && currentWet >= rWetness && currentTemp >= rTemp) {
-    text = 'Вы выиграли!';
+    text = '<h3>Вы выиграли!</h3>';
     /* Проверка на проигрыш */
   } else if (currentTime >= rTime && (currentWet <= rWetness || currentTemp <= rTemp)) {
-    text = 'Вы проиграли (не достигли одного из параметров)';
+    text = '<h3>Вы проиграли <span>(не достигли одного из параметров)</span></h3>';
   } else if (currentWet > rWetness * fallibility || currentTemp > rTemp * fallibility) {
-    text = 'Вы проиграли (превысили один из параметров на 10%)';
-  }
+    text = '<h3>Вы проиграли <span>(превысили один из параметров на 10%)</span></h3>';
+  }  
+
   if (text != '') {    
+    text += `<p>Оптимальный способ растопки:<br /> <span class="rAlgoritm">${bestAlgoritm.algoritm.split(' ').join(' &#8594; ')}</span></p>
+    <p>Вы бы достигли следующих параметров: </p>
+    <ul><li>Температура: ${bestAlgoritm.temp}</li>
+    <li>Влажность: ${bestAlgoritm.wet}</li>
+    <li>Время: ${bestAlgoritm.time}</li>
+    <li>Дрова: ${bestAlgoritm.woods}</li>
+    </ul>`;
+    
     let gameResult = document.querySelector('#gameResult');    
     let p = document.createElement('p');
     p.innerHTML = text;
@@ -255,11 +230,13 @@ function inHeater(event) {
 const log = document.querySelector('.log');
 //отследим нажатие
 log.onmousedown = function(event) {
+  stoveRigth.style.display = 'block';
   const onMouseMove = moveElement(event, log);
     // перемещаем элемент по экрану при событии mousemove
     document.addEventListener('mousemove', onMouseMove);
     //при отжатии кнопки мыши увеличить параметры, отрисовать параметры и вернуть элемент на исходное место
-    log.onmouseup = function(event) {        
+    log.onmouseup = function(event) {
+        stoveRigth.style.display = 'none';              
         if (inStoveRect(event)) {    
             let state = getRules(currentTemp);
 
@@ -275,7 +252,7 @@ log.onmousedown = function(event) {
             currentCostWoods += 1;           
             drawCurrentParams(); 
             journal('Полено', currentTemp, currentWet, currentTime);          
-            log.style.top = '543px';
+            log.style.top = '625px';
             log.style.left = '686px';
         }
       //удалим более ненужные обработчики событий
@@ -291,10 +268,12 @@ log.onmousedown = function(event) {
 //ДЛЯ БЕРЕСТЫ
 const bark = document.querySelector('.bark');
 bark.onmousedown = function(event) {  
+  stoveRigth.style.display = 'block';
   const onMouseMove = moveElement(event, bark);       
   document.addEventListener('mousemove', onMouseMove);
   //при попадании в печку
-  bark.onmouseup = function(event) {                
+  bark.onmouseup = function(event) {  
+    stoveRigth.style.display = 'none';              
       if (inStoveRect(event)){
           let state = getRules(currentTemp);
 
@@ -310,7 +289,7 @@ bark.onmousedown = function(event) {
           currentCostBark += 1; 
           drawCurrentParams();   
           journal('Береста', currentTemp, currentWet, currentTime);            
-          bark.style.top = '543px';
+          bark.style.top = '625px';
           bark.style.left = '865px';
       }
   document.removeEventListener('mousemove', onMouseMove);
@@ -324,10 +303,12 @@ bark.ondragstart = function() {
 //ДЛЯ ВОДЫ
 const water = document.querySelector('.water');
 water.onmousedown = function(event) {
+    stoveLeft.style.display = 'block';
     const onMouseMove = moveElement(event, water);     
     document.addEventListener('mousemove', onMouseMove);   
 
     water.onmouseup = function(event) {
+      stoveLeft.style.display = 'none';
         let heaterRect = heater.getBoundingClientRect();   
         if (event.pageX > heaterRect.x && event.pageX < heaterRect.x + heaterRect.width && event.pageY > heaterRect.y && event.pageY < heaterRect.y + heaterRect.height) {    
             let state = getRules(currentTemp);
@@ -378,6 +359,8 @@ btn.addEventListener('click', function() {
     gameRules.style.display = 'none';
     let game = document.querySelector('#game');
     game.style.display = 'block';
+
+    drawCurrentParams();
   }
 });
 /* Дерево вариантов растопки */
@@ -394,7 +377,7 @@ class Node {
       //вызываю рекурсивный метод buildTree
       this.buildTree();
   };    
-  //объявляю метод класса Node с уловиями
+  //объявляю метод класса Node с условиями
   buildTree() {        
       if (this.temp < rTemp && this.wet < rWetness) {
           //создаю 3 новых узла, которые являются дочерними для текущего (на первом шаге для root)
@@ -406,7 +389,7 @@ class Node {
           }          
       } else {
           /* Проверяю на пустой объект */
-          if (this.temp > rTemp && this.wet > rWetness && this.temp < rTemp * fallibility && this.wet < rWetness * fallibility) {
+          if (this.temp >= rTemp && this.wet >= rWetness && this.temp <= rTemp * fallibility && this.wet <= rWetness * fallibility) {
             if (!Object.keys(bestAlgoritm).length) {
                 bestAlgoritm.algoritm = this.algoritm;
                 bestAlgoritm.temp = this.temp;

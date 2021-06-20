@@ -13,30 +13,41 @@ h1,h2 {
 h1 {font-size: 36px;}
 h2,h3 {font-size: 24px;}
 
+body {
+    overflow: hidden;
+    font-family: Arial;
+}
+
 #steamroom {    
     width: 1579px;
     height: 700px;
     margin: 0 auto;
     background: url('../images/game/steamroom.jpg') no-repeat scroll center center /contain;
+    padding: 30px 0px;
 }
 #h1 {
     color: white;
+    padding-top: 20px;
 }
 #journal {
     position: absolute;
-    width: 300px;
+    width: 360px;
     min-height: 300px;
-    left: 350px;
-    top: 60px;
+    left: 320px;
+    top: 75px;
     background: rgba(255,255,235,0.6);
     padding: 10px;
     border-radius: 5px;    
+}
+.journalTableBox {
+    max-height: 270px;
+    overflow-y: auto;
 }
 #currentParams {
     position: absolute;
     width: 250px;
     right: 350px;
-    top: 60px;
+    top: 75px;
     background: rgba(255,255,235,0.6);
     padding: 10px;
     border-radius: 5px;    
@@ -45,38 +56,65 @@ h2,h3 {font-size: 24px;}
     height: 100%;
     position: relative;
 }
+#game h1 {
+    color: #ccc;
+    background: rgba(0, 0, 0, 0.8);
+    width: 800px;
+    margin: 0 auto 10px;
+    border-radius: 8px;
+    padding: 10px 15px;
+}
 #currentParams p{
     display: flex;
     justify-content: space-between;
 }
 #gameResult {
-    width: 800px;
+    width: 870px;
     margin: 0 auto;
     position: absolute;
-    bottom: 100px;
-    left:350px;
+    bottom: 20px;
+    left: 350px;    
+    background: rgba(255,255,255,0.8);
 }
 #gameResult p{
-    font-size: 40px;
-    background: rgba(255,255,255,0.5);
+    font-size: 16px;    
     border-radius: 5px;
-    padding: 5px 20px;
+    padding: 5px 20px;    
+}
+#gameResult ul{    
+    margin-left: 60px;
+}
+#gameResult h3{
+    font-size: 25px; 
+}
+#gameResult p span {
+    font-size: 20px;
+}
+.rAlgoritm {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 3px;
+    border: 1px solid #333;
+    font-size: 19px;
+    line-height: 40px;
+    display: block;
+    text-align: center;
 }
 #heater {  
     width: 128px;
-    height: 140px;
-    /* background: rgba(255,255,235,0.2); */
+    height: 250px;
+    /* background: rgba(255,255,235,0.2);  */
     position: absolute;
-    top: 228px;
-    left: 733px;  
+    top: 170px;
+    left: 736px;  
 } 
 #stove {  
     width: 115px;
     height: 95px;
     /* background: rgba(255,255,235,0.2); */
     position: absolute;
-    top: 378px;
-    left: 750px;  
+    top: 430px;
+    left: 753px;  
 } 
 .flame {
     padding-left: 3px;
@@ -91,30 +129,76 @@ h2,h3 {font-size: 24px;}
 }
 .log {
     position: absolute;
-    top: 543px;
+    top: 600px;
     left: 686px;
     width: 100px;
 }
+.log:hover {
+    background: radial-gradient(#fff,rgba(255,255,255,0));
+    border-radius: 25%;
+    box-shadow: 0 0 10px #fff;
+    padding: 8px;
+}
 .bark {
     position: absolute;
-    top: 543px;
+    top: 600px;
     left: 865px;
     width: 100px;
+}
+.bark:hover {
+    background: radial-gradient(#fff,rgba(255,255,255,0));
+    border-radius: 25%;
+    box-shadow: 0 0 10px #fff;
+    padding: 8px;
 }
 .water {
     position: absolute;
     top: 395px;
     left: 1033px;
 }
+.water:hover {
+    background: radial-gradient(rgb(97, 91, 91),rgba(255,255,255,0));
+    border-radius: 25%;
+    box-shadow: 0 0 10px #fff;
+    padding: 8px;
+}
 
 #gameRules {
-    margin: 100px auto 0;
+    margin: 0 auto;
     width: 800px;
-    color: #fff;
-    background: rgba(0,0,0,0.5);
+    color: #ccc;
+    background: rgba(0,0,0,0.8);
     padding: 15px 30px;
-    border-radius: 5px;
+    border-radius: 5px;    
+    line-height: 30px;
 }
+#gameRules h1 {
+    margin-bottom: 30px;    
+}
+#gameRules select {
+    border: none;
+    padding: 5px;
+}
+
+#gameRules ul {
+    margin-left: 30px;    
+}
+#gameRules button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+    background: red;
+    color: white; 
+    text-transform: uppercase;  
+}
+#gameRules button:hover {
+    
+    box-shadow: 0 0 10px rgba(0,0,0,0.5) inset;
+}
+
+
+
 #journalTable {
     width: 100%;    
 }
@@ -131,4 +215,23 @@ h2,h3 {font-size: 24px;}
 }
 .lose {
     color: red;
+}
+
+#stoveRigth {
+    position: absolute;
+    left: 632px;
+    top: 411px;
+}
+#stoveRigth img {
+    transform: rotate(-78.5deg);
+    width: 100px;
+}
+#stoveLeft {
+    position: absolute;
+    left: 860px;
+    top: 260px;
+}
+#stoveLeft img {
+    transform: rotate(100deg);
+    width: 100px;    
 }
