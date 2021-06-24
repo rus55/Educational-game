@@ -3,27 +3,27 @@
 let bestAlgoritm = {};
 
 //Условия окончания игры
-let rTime = 20;//время
-let rWetness = 60;//влажность
-let rTemp = 60;//температура
+let rTime = 0;//время
+let rWetness = 0;//влажность
+let rTemp = 0;//температура
 
 //Ограничим количество дров для игры
-const rWoods = 20; //количество дров для растопки
+const rWoods = 20; // проверить переменную на использование
 //Ограничим количество бересты в горстях для игры
-const rBark = 5; //количество горстей бересты для растопки
+const rBark = 5; // проверить переменную на использование
 
-const fireWithoutWoods = 30; //кол-во минут, через которое огонь погаснет если не подкидывать дрова
-const fallibility = 1.1; // погрешность, на которую можно превысить показатели
+const timeWithoutWoods = 15; //кол-во минут, через которое огонь погаснет если не подкидывать дрова
+const fallibility = 1.15; // погрешность, на которую можно превысить показатели
 
 //Текущие показатели
 let currentTemp = 20;
 let currentTime = 0;
-let currentWet = 20;
+let currentWet = 10;
 let currentCostWoods = 0;
 let currentCostBark = 0;
 let currentCostWater = 0;
 let currentTimeWithoutWoods = 0;
-let waterOnFire = false;
+let waterOnFire = false;//когда черпаком льем в печь, то становится переменная true и игра заканчивается
 
 /* Правила роста температуры и влажности */
 const rules = {
@@ -44,17 +44,14 @@ const rules = {
   }
 }
 
-
-
 //Вывод текущих результатов в game.html
-function drawCurrentParams() {
+function drawCurrentParams() { //вызываю данную функцию каждый раз, когда что-то подкинул
   const headerParam = document.createElement('h2');
-  headerParam.innerHTML = 'Текущие параметры';
-  headerParam.className = 'headerParam';
+  headerParam.innerHTML = 'Текущие параметры';  
 
   const timeCondition = document.createElement('p');
-  timeCondition.innerHTML = 'Вам дано ' + rTime + 'мин.';
-  timeCondition.style = 'display: block; font-style: italic;margin: 0 auto;text-align: center;'
+  timeCondition.innerHTML = 'Вам дано ' + rTime + ' минут';
+  timeCondition.style = 'display: block; color: #DF0000; font-weight: bold; margin: 0 auto; text-align: center;'//тут попробовать выровнять по-другому
 
   const currentTempEl = document.createElement('p');
   currentTempEl.innerHTML = `Температура: <span>${currentTemp}</span>`;
@@ -75,26 +72,25 @@ function drawCurrentParams() {
   currentCostWaterEl.innerHTML = `Черпак: <span>${currentCostWater}</span>`;
 
   const currentParams = document.querySelector('#currentParams');
-  currentParams.innerHTML = '';
+  currentParams.innerHTML = ''; //очищаю, чтобы перезаписать блок
 
-  currentParams.append(headerParam, timeCondition, currentTempEl, currentTimeEl, currentWetEl, currentCostWoodsEl, currentCostBarkEl, currentCostWaterEl);  
-  checkGameOver();  
+  currentParams.append(headerParam, timeCondition, currentTempEl, currentTimeEl, currentWetEl, currentCostWoodsEl, currentCostBarkEl, currentCostWaterEl);  //добавляю элементы в currentParams каждый раз как вызывается функция drawCurrentParams
+  checkGameOver(); //проверка конца игры (данную функцию вызываю при каждом действии)
 }
 
-//Вывод текущих результатов
-function drawResultParams() {
+//Вывод результирующих параметров в блоке вместо текущих параметров
+function drawResultParams() { 
   const headerParam = document.createElement('h2');
-  headerParam.innerHTML = 'Результирующие параметры';//Проверь !!!
-  headerParam.className = 'headerParam';
+  headerParam.innerHTML = 'Результирующие параметры';   
 
   const currentTempEl = document.createElement('p');
   if (currentTemp < rTemp) {
-    currentTempEl.className = 'lose';
-    currentTemp += ` (не достигнут ${rTemp})`;
+      currentTempEl.className = 'lose';
+      currentTemp += ` (не достигнуто ${rTemp})`;
   }
   if (currentTemp > rTemp * fallibility) {
-    currentTempEl.className = 'lose';
-    currentTemp += ` (превышение ${rTemp * fallibility})`;
+      currentTempEl.className = 'lose';
+      currentTemp += ` (превышение ${rTemp * fallibility})`;
   }
   currentTempEl.innerHTML = `Температура: <span>${currentTemp}</span>`;
 
@@ -103,12 +99,12 @@ function drawResultParams() {
 
   const currentWetEl = document.createElement('p');
   if (currentWet < rWetness) {
-    currentWetEl.className = 'lose';
-    currentWet += ` (не достигнут ${rWetness})`;
+      currentWetEl.className = 'lose';
+      currentWet += ` (не достигнут ${rWetness})`;
   }
   if (currentWet > rWetness * fallibility) {
-    currentWetEl.className = 'lose';
-    currentWet += ` (превышение ${rWetness * fallibility})`;
+      currentWetEl.className = 'lose';
+      currentWet += ` (превышение ${rWetness * fallibility})`;
   }
   currentWetEl.innerHTML = `Влажность: <span>${currentWet}</span>`;
 
@@ -116,21 +112,20 @@ function drawResultParams() {
   currentCostWoodsEl.innerHTML = `Дрова: <span>${currentCostWoods}</span>`;
 
   const currentParams = document.querySelector('#currentParams');
-  currentParams.innerHTML = '';
+  currentParams.innerHTML = '';  //очищаю, чтобы перезаписать блок
 
-  currentParams.append(headerParam, currentTempEl, currentTimeEl, currentWetEl, currentCostWoodsEl); 
+  currentParams.append(headerParam, currentTempEl, currentTimeEl, currentWetEl, currentCostWoodsEl); //добавляю элементы в currentParams каждый раз как вызывается функция drawResultParams, то есть, когда игра закончена
 }
 
 /* Функция журнала растопки */
-function journal(action, temp, time, wet) {
+function journal(action, temp, wet, time) {  
   let tr = document.createElement('tr');
-  tr.innerHTML = `<td>${action}</td><td>${temp}</td><td>${time}</td><td>${wet}</td>`;
+  tr.innerHTML = `<td>${action}</td><td>${temp}</td><td>${wet}</td><td>${time}</td>`;
   let journal = document.querySelector('#journalTable');     
   journal.append(tr);  
 }
 
 /* Функция определения текущего состояния по температуре */
-
 function getRules(currentTemp) {
   let state = 'before40';
   if (currentTemp < 40) {
@@ -143,11 +138,17 @@ function getRules(currentTemp) {
   return state;
 }
 
+function changeCurrentParams(time, temp, wet) {    
+    currentTemp += temp;
+    currentTime += time; 
+    currentWet += wet;        
+}
+
 /* Функция проверки окончания игры */
 function checkGameOver() {  
-  let text = '';
+  let text = ''; //переменная, которая хранит текст проигрыша или выигрыша
   //проверка на потухший огонь в печке
-  if (currentTimeWithoutWoods >= fireWithoutWoods || waterOnFire) {
+  if (currentTimeWithoutWoods >= timeWithoutWoods || waterOnFire) {
     text = '<h3>Вы проиграли! Огонь в печке погас...</h3>';
     document.querySelector('.flame').src = 'images/game/ugli.jpg';
   }
@@ -161,7 +162,7 @@ function checkGameOver() {
     text = '<h3>Вы проиграли <span>(превысили один из параметров на 10%)</span></h3>';
   }  
 
-  if (text != '') {    
+  if (text != '') { //сюда попадаем, если игра окончена   
     text += `<p>Оптимальный способ растопки:<br /> <span class="rAlgoritm">${bestAlgoritm.algoritm.split(' ').join(' &#8594; ')}</span></p>
     <p>Вы бы достигли следующих параметров: </p>
     <ul><li>Температура: ${bestAlgoritm.temp}</li>
@@ -177,12 +178,12 @@ function checkGameOver() {
     document.querySelector('.log').style.display = 'none';
     document.querySelector('.bark').style.display = 'none';
     document.querySelector('.water').style.display = 'none';
-    drawResultParams();
+    drawResultParams(); //единственный вызов функции
   }  
 }
 
 //Отрисовка переноса элемента
-function moveElement(event, element) {
+function moveElement(event, element) { //ПОПРАВИТЬ 21.06
   //расстояние от курсора до левого верхнего угла (полена/бересты/ковша воды) в переменных shiftX/shiftY
   let shiftX = event.clientX - element.getBoundingClientRect().left;//Метод Element.getBoundingClientRect() возвращает размер элемента и его позицию относительно viewport
   let shiftY = event.clientY - element.getBoundingClientRect().top;  
@@ -194,23 +195,21 @@ function moveElement(event, element) {
   // и установим абсолютно спозиционированный наш элемент под курсор
   moveAt(event.pageX, event.pageY);
   // передвинуть элемент под координаты курсора 
-  // переносит элемент на координаты (pageX, pageY),
-  // дополнительно учитывая изначальный сдвиг относительно указателя мыши 
+  // переносит элемент на координаты (pageX, pageY), дополнительно учитывая изначальный сдвиг относительно указателя мыши 
   function moveAt(pageX, pageY) {
     element.style.left = pageX - shiftX + 'px';
     element.style.top = pageY - shiftY + 'px';
   }
-
+  /* Функция перемещения элемента */
   function onMouseMove(event) {
     moveAt(event.pageX, event.pageY);
   }
-
   return onMouseMove;
 }
 //При попадании полена/бересты в печку
 function inStoveRect(event) {
   const stoveRect = stove.getBoundingClientRect();//Метод Element.getBoundingClientRect() возвращает размер элемента и его позицию относительно viewport
-  if (event.pageX > stoveRect.x && event.pageX < stoveRect.x + stoveRect.width && event.pageY > stoveRect.y && event.pageY < stoveRect.y + stoveRect.height) {
+  if (event.pageX /* Х координата курсора мыши */ > stoveRect.x/* координата левого края прямоугольника */ && event.pageX < stoveRect.x + stoveRect.width /* ширина прямоугольника */ && event.pageY > stoveRect.y && event.pageY < stoveRect.y + stoveRect.height) {
     return true;
   } else {
     return false;
@@ -246,9 +245,8 @@ log.onmousedown = function(event) {
             document.querySelector('#audio').append(audioWood);  
 
             currentTimeWithoutWoods = 0;
-            currentTemp += rules[state].poleno.temp;
-            currentTime += rules[state].poleno.time;
-            currentWet += rules[state].poleno.wet;
+            changeCurrentParams(rules[state].poleno.time, rules[state].poleno.temp, rules[state].poleno.wet); 
+            currentTimeWithoutWoods += rules[state].poleno.time;         
             currentCostWoods += 1;           
             drawCurrentParams(); 
             journal('Полено', currentTemp, currentWet, currentTime);          
@@ -282,16 +280,15 @@ bark.onmousedown = function(event) {
           audioHiss.setAttribute('autoplay', 'autoplay');      
           document.querySelector('#audio').append(audioHiss); 
 
-          currentTimeWithoutWoods += rules[state].bark.time;
-          currentTemp += rules[state].bark.temp;
-          currentTime += rules[state].bark.time;
-          currentWet += rules[state].bark.wet;           
+          changeCurrentParams(rules[state].bark.time, rules[state].bark.temp, rules[state].bark.wet);    
+          currentTimeWithoutWoods += rules[state].bark.time;      
           currentCostBark += 1; 
           drawCurrentParams();   
           journal('Береста', currentTemp, currentWet, currentTime);            
           bark.style.top = '625px';
           bark.style.left = '865px';
       }
+      //удалим более ненужные обработчики событий
   document.removeEventListener('mousemove', onMouseMove);
   bark.onmouseup = null;
   };  
@@ -318,10 +315,8 @@ water.onmousedown = function(event) {
             audioBark.setAttribute('autoplay', 'autoplay');      
             document.querySelector('#audio').append(audioBark); 
 
-            currentTimeWithoutWoods += rules[state].water.time;
-            currentTemp += rules[state].water.temp;
-            currentTime += rules[state].water.time;
-            currentWet += rules[state].water.wet;   
+            changeCurrentParams(rules[state].water.time, rules[state].water.temp, rules[state].water.wet);
+            currentTimeWithoutWoods += rules[state].water.time;  
             currentCostWater += 1;                       
             drawCurrentParams();
             journal('Вода', currentTemp, currentWet, currentTime);             
@@ -339,16 +334,16 @@ water.ondragstart = function() {
   return false;
 };
 
-/* По кнопке начать игру(считываю начальные параметры - темп и влажность). Также скрывать экран с заставкой и отображать экран с игрой. Также строить дерево. */
-
+/* По кнопке начать игру считываю начальные параметры: температуру и влажность. Также скрываю экран с заставкой и отображаю экран с игрой. Также строю дерево. */
 let btn = document.querySelector('#btnStartGame');
 btn.addEventListener('click', function() {
   rTemp = document.querySelector('#likeTemp').value;  
   rWetness = document.querySelector('#likeWet').value;    
   /* Строю дерево вариантов */
-  //Создал экземпляр класса root, который будет корнем нашего дерева
-  let root = new Node('полено', 20, 20, 0, 5, 0);//тип полено, темп 20 стартовая, 20 стартовая влажность, 0 стартовое время, 5 это дрова, 0 время без дров  
-  if (!Object.keys(bestAlgoritm).length) {
+  //Создал экземпляр класса root, который будет корнем нашего дерева и сразу создаю дерево, так как функция создания дерева вызывается в конструкторе 
+  const root = new Node('полено', 20, 20, 0, 5, 0);//тип полено, темп 20 стартовая, 20 стартовая влажность, 0 стартовое время, 5 это дрова, 0 время без дров  
+  /* После проверки возможно убрать */
+  if (Object.keys(bestAlgoritm).length == 0) {
     alert('Невозможно растопить баню с такими параметрами. Попробуйте выбрать другие');
   } else {
     console.log(bestAlgoritm);
@@ -366,43 +361,47 @@ btn.addEventListener('click', function() {
 /* Дерево вариантов растопки */
 class Node {
   //пишу конструктор для узла дерева
-  constructor(algoritm, temp, wet, time, woods, withoutWoods) {        
+  constructor(algoritm, temp, wet, time, woods, currentWithoutWoods) {        
       //переменные узла
       this.algoritm = algoritm;
       this.temp = temp;
       this.wet = wet;
       this.time = time;
       this.woods = woods;        
-      this.withoutWoods = withoutWoods;
+      this.currentWithoutWoods = currentWithoutWoods;
       //вызываю рекурсивный метод buildTree
       this.buildTree();
   };    
   //объявляю метод класса Node с условиями
-  buildTree() {        
+  buildTree() {    /* Рекурсивная функция */  
+    /* если не достиг нужной темп и влажности */  
       if (this.temp < rTemp && this.wet < rWetness) {
           //создаю 3 новых узла, которые являются дочерними для текущего (на первом шаге для root)
           let state = getRules(this.temp);
           this.woodNode = new Node(this.algoritm + ' полено', this.temp + rules[state].poleno.temp, this.wet + rules[state].poleno.wet, this.time + rules[state].poleno.time, this.woods + 1, 0);
-          if (this.withoutWoods < fireWithoutWoods) {
-              this.barkNode = new Node(this.algoritm + ' береста', this.temp + rules[state].bark.temp, this.wet + rules[state].bark.wet, this.time + rules[state].bark.time, this.woods, this.withoutWoods + rules[state].bark.time);
-              this.waterNode = new Node(this.algoritm + ' вода', this.temp + rules[state].water.temp, this.wet + rules[state].water.wet, this.time + rules[state].water.time, this.woods, this.withoutWoods + rules[state].water.time);
+          if (this.currentWithoutWoods < timeWithoutWoods) {/* если еще не прошло 15 минут без дров */  
+              this.barkNode = new Node(this.algoritm + ' береста', this.temp + rules[state].bark.temp, this.wet + rules[state].bark.wet, this.time + rules[state].bark.time, this.woods, this.currentWithoutWoods + rules[state].bark.time);
+              this.waterNode = new Node(this.algoritm + ' вода', this.temp + rules[state].water.temp, this.wet + rules[state].water.wet, this.time + rules[state].water.time, this.woods, this.currentWithoutWoods + rules[state].water.time);
           }          
-      } else {
-          /* Проверяю на пустой объект */
+      } else {/* иначе 1 из параметров достигнут */
+          /* проверяю попали ли наши температура и влажность от заданого значения до значения с учетом погрешности (10%) */
           if (this.temp >= rTemp && this.wet >= rWetness && this.temp <= rTemp * fallibility && this.wet <= rWetness * fallibility) {
+            /* Проверяю на пустой объект */
             if (!Object.keys(bestAlgoritm).length) {
+              /* если Бесталгоритм пустой(так как изначально я его инициализирую пустой строкой), то заносим в него текущее решение, так как оно прошло все проверки и оно нас устраивает */
                 bestAlgoritm.algoritm = this.algoritm;
                 bestAlgoritm.temp = this.temp;
                 bestAlgoritm.wet = this.wet;
                 bestAlgoritm.time = this.time;
                 bestAlgoritm.woods = this.woods;
-            } else {                
+            } else {    /* если уже есть Бесталгоритм, то смотрим у текущего решения лучше время или нет? Если лучше, то обновляем Бесталгоритм */            
                   if (this.time < bestAlgoritm.time) {
                     bestAlgoritm.algoritm = this.algoritm;
                     bestAlgoritm.temp = this.temp;
                     bestAlgoritm.wet = this.wet;
                     bestAlgoritm.time = this.time;
                     bestAlgoritm.woods = this.woods;
+                    /* если время такое же, то проверяем количество дров. Если потрачено меньше, то тоже обновляем Бесталгоритм */
                   } else if (this.time == bestAlgoritm.time && this.woods < bestAlgoritm.woods) {
                       bestAlgoritm.algoritm = this.algoritm;
                       bestAlgoritm.temp = this.temp;
@@ -410,8 +409,7 @@ class Node {
                       bestAlgoritm.time = this.time;
                       bestAlgoritm.woods = this.woods;
                   }
-                }
-                //console.log(bestAlgoritm);
+                }                
           }          
       }
   };

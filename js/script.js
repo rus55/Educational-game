@@ -152,7 +152,6 @@ let lengthElem = document.querySelector('#length');
 lengthElem.addEventListener('change', function() {
     length = this.value; 
     calcPrice();   
-   
 });
 
 let widthElem = document.querySelector('#width');
@@ -380,7 +379,7 @@ function calcPrice() {
 
     //Обратимся по идентификатору к цене, которая в интерфейсе
     let priceElem = document.querySelector('#price');
-    priceElem.innerHTML = price ;    
+    priceElem.innerHTML = price;    
 }
 
 /* Для кнопки назад */
