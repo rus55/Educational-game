@@ -17,3 +17,35 @@ gulp.task('compress', function() {
 	.pipe(imagemin())
 	.pipe(gulp.dest('dist/img'))
   });
+
+/* 
+  gulp.task('styles', function () {
+	return gulp.src('src/sass/*.sass')
+	.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+	.pipe(rename({sufflix: '.min', prefix: ''}))
+	.pipe(autoprefixer())
+	.pipe(gulp.dest('dist/css'));
+
+});
+
+export.default = () => (
+	gulp.src('src/img/**')
+		.pipe(imagemin({
+			imagemin.gifsicle({interlaced: true}),
+			imagemin.mozjpeg({quality: 75, progressive: true}),
+			imagemin.optipng({optimizationLevel: 2}),
+			imagemin.svgo({
+				plugins: [
+					{removeViewBox: true},
+				{cleanupIDs: false}
+]
+})	
+}))
+.pipe(gulp.dest('dist/img'))
+);
+
+exports.view = () => {
+	gulp.src('src/*.pug')
+		.pipe(pug())
+		.pipe(gulp.dest('dist'));
+}; */

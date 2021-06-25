@@ -2,6 +2,10 @@
 /* Сюда буду сохранять самое лучшее решение из дерева (принцип минимум-максимум) */
 let bestAlgoritm = {};
 
+/* Понизил громкость звука */
+let audio = document.querySelector('audio');
+audio.volume = 0.1;
+
 //Условия окончания игры
 let rTime = 0;//время
 let rWetness = 0;//влажность
@@ -18,7 +22,7 @@ const fallibility = 1.15; // погрешность, на которую мож�
 //Текущие показатели
 let currentTemp = 20;
 let currentTime = 0;
-let currentWet = 10;
+let currentWet = 20;
 let currentCostWoods = 0;
 let currentCostBark = 0;
 let currentCostWater = 0;
@@ -29,17 +33,17 @@ let waterOnFire = false;//когда черпаком льем в печь, то
 const rules = {
   before40: {
     poleno: {temp: 3, time: 10, wet: 1},
-    bark: {temp: 3, time: 5, wet: 2},
+    bark: {temp: 3, time: 5, wet: 0},
     water: {temp: 5, time: 5, wet: 5}
   },
   between40_60: {
     poleno: {temp: 4, time: 10, wet: 2},
-    bark: {temp: 5, time: 5, wet: 3},
+    bark: {temp: 5, time: 5, wet: 1},
     water: {temp: 6, time: 4, wet: 6}
   },
   after60: {
     poleno: {temp: 5, time: 8, wet: 3},
-    bark: {temp: 5, time: 4, wet: 4},
+    bark: {temp: 5, time: 4, wet: 2},
     water: {temp: 6, time: 2, wet: 8}
   }
 }
@@ -50,7 +54,7 @@ function drawCurrentParams() { //вызываю данную функцию ка
   headerParam.innerHTML = 'Текущие параметры';  
 
   const timeCondition = document.createElement('p');
-  timeCondition.innerHTML = 'Вам дано ' + rTime + ' минут';
+  timeCondition.innerHTML = 'Вам дано ' + rTime + ' мин.';
   timeCondition.style = 'display: block; color: #DF0000; font-weight: bold; margin: 0 auto; text-align: center;'//тут попробовать выровнять по-другому
 
   const currentTempEl = document.createElement('p');
@@ -100,7 +104,7 @@ function drawResultParams() {
   const currentWetEl = document.createElement('p');
   if (currentWet < rWetness) {
       currentWetEl.className = 'lose';
-      currentWet += ` (не достигнут ${rWetness})`;
+      currentWet += ` (не достигнуто ${rWetness})`;
   }
   if (currentWet > rWetness * fallibility) {
       currentWetEl.className = 'lose';
@@ -246,7 +250,7 @@ log.onmousedown = function(event) {
 
             currentTimeWithoutWoods = 0;
             changeCurrentParams(rules[state].poleno.time, rules[state].poleno.temp, rules[state].poleno.wet); 
-            currentTimeWithoutWoods += rules[state].poleno.time;         
+
             currentCostWoods += 1;           
             drawCurrentParams(); 
             journal('Полено', currentTemp, currentWet, currentTime);          
