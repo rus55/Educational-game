@@ -33,18 +33,18 @@ let waterOnFire = false;//когда черпаком льем в печь, то
 const rules = {
   before40: {
     poleno: {temp: 3, time: 10, wet: 1},
-    bark: {temp: 3, time: 5, wet: 0},
-    water: {temp: 5, time: 5, wet: 5}
+    bark: {temp: 4, time: 5, wet: 0},
+    water: {temp: 2, time: 5, wet: 5}
   },
   between40_60: {
     poleno: {temp: 4, time: 10, wet: 2},
     bark: {temp: 5, time: 5, wet: 1},
-    water: {temp: 6, time: 4, wet: 6}
+    water: {temp: 3, time: 4, wet: 6}
   },
   after60: {
     poleno: {temp: 5, time: 8, wet: 3},
     bark: {temp: 5, time: 4, wet: 2},
-    water: {temp: 6, time: 2, wet: 8}
+    water: {temp: 4, time: 2, wet: 8}
   }
 }
 
@@ -55,7 +55,7 @@ function drawCurrentParams() { //вызываю данную функцию ка
 
   const timeCondition = document.createElement('p');
   timeCondition.innerHTML = 'Вам дано ' + rTime + ' мин.';
-  timeCondition.style = 'display: block; color: #DF0000; font-weight: bold; margin: 0 auto; text-align: center;'//тут попробовать выровнять по-другому
+  timeCondition.style = 'display: block; color: #DF0000; font-weight: bold; margin: 0 auto; text-align: center;'
 
   const currentTempEl = document.createElement('p');
   currentTempEl.innerHTML = `Температура: <span>${currentTemp}</span>`;
@@ -142,6 +142,7 @@ function getRules(currentTemp) {
   return state;
 }
 
+/* Функция, увеличивающая текущие параметры: температура, влажность, время */
 function changeCurrentParams(time, temp, wet) {    
     currentTemp += temp;
     currentTime += time; 
@@ -163,7 +164,7 @@ function checkGameOver() {
   } else if (currentTime >= rTime && (currentWet <= rWetness || currentTemp <= rTemp)) {
     text = '<h3>Вы проиграли <span>(не достигли одного из параметров)</span></h3>';
   } else if (currentWet > rWetness * fallibility || currentTemp > rTemp * fallibility) {
-    text = '<h3>Вы проиграли <span>(превысили один из параметров на 10%)</span></h3>';
+    text = '<h3>Вы проиграли <span>(превысили один из параметров на 15%)</span></h3>';
   }  
 
   if (text != '') { //сюда попадаем, если игра окончена   
@@ -229,7 +230,7 @@ function inHeater(event) {
   }
 }
 
-//ДЛЯ ПОЛЕНА
+//ДЛЯ ПОЛЕНА drug and drop
 const log = document.querySelector('.log');
 //отследим нажатие
 log.onmousedown = function(event) {
@@ -267,7 +268,7 @@ log.onmousedown = function(event) {
     return false;
   };  
 
-//ДЛЯ БЕРЕСТЫ
+//ДЛЯ БЕРЕСТЫ drug and drop
 const bark = document.querySelector('.bark');
 bark.onmousedown = function(event) {  
   stoveRigth.style.display = 'block';
@@ -301,7 +302,7 @@ bark.ondragstart = function() {
   return false;
 };
 
-//ДЛЯ ВОДЫ
+//ДЛЯ ВОДЫ drug and drop
 const water = document.querySelector('.water');
 water.onmousedown = function(event) {
     stoveLeft.style.display = 'block';
@@ -345,14 +346,13 @@ btn.addEventListener('click', function() {
   rWetness = document.querySelector('#likeWet').value;    
   /* Строю дерево вариантов */
   //Создал экземпляр класса root, который будет корнем нашего дерева и сразу создаю дерево, так как функция создания дерева вызывается в конструкторе 
-  const root = new Node('полено', 20, 20, 0, 5, 0);//тип полено, темп 20 стартовая, 20 стартовая влажность, 0 стартовое время, 5 это дрова, 0 время без дров  
-  /* После проверки возможно убрать */
+  const root = new Node('', 20, 20, 0, 0, 0);//тип полено, темп 20 стартовая, 21 стартовая влажность, 10 стартовое время, 1 это дрова, 0 время без дров    
   if (Object.keys(bestAlgoritm).length == 0) {
     alert('Невозможно растопить баню с такими параметрами. Попробуйте выбрать другие');
   } else {
     console.log(bestAlgoritm);
     // берем из лучшего решения время и добавляем к нему 10 минут - устанавливаем как данное время для растопки (+10 или +5 - можно регулировать сложность игры)
-    rTime = bestAlgoritm.time + 10; 
+    rTime = bestAlgoritm.time + +document.querySelector('#difficultyLevel').value; 
     /* меняем отображение экрана */
     let gameRules = document.querySelector('#gameRules');
     gameRules.style.display = 'none';
@@ -384,8 +384,8 @@ class Node {
           let state = getRules(this.temp);
           this.woodNode = new Node(this.algoritm + ' полено', this.temp + rules[state].poleno.temp, this.wet + rules[state].poleno.wet, this.time + rules[state].poleno.time, this.woods + 1, 0);
           if (this.currentWithoutWoods < timeWithoutWoods) {/* если еще не прошло 15 минут без дров */  
-              this.barkNode = new Node(this.algoritm + ' береста', this.temp + rules[state].bark.temp, this.wet + rules[state].bark.wet, this.time + rules[state].bark.time, this.woods, this.currentWithoutWoods + rules[state].bark.time);
               this.waterNode = new Node(this.algoritm + ' вода', this.temp + rules[state].water.temp, this.wet + rules[state].water.wet, this.time + rules[state].water.time, this.woods, this.currentWithoutWoods + rules[state].water.time);
+              this.barkNode = new Node(this.algoritm + ' береста', this.temp + rules[state].bark.temp, this.wet + rules[state].bark.wet, this.time + rules[state].bark.time, this.woods, this.currentWithoutWoods + rules[state].bark.time);
           }          
       } else {/* иначе 1 из параметров достигнут */
           /* проверяю попали ли наши температура и влажность от заданого значения до значения с учетом погрешности (10%) */
