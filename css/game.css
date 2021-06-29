@@ -17,7 +17,6 @@ body {
     overflow: hidden;
     font-family: Arial;
 }
-
 #steamroom {    
     width: 1579px;
     height: 700px;
@@ -56,7 +55,7 @@ body {
 #currentParams {
     position: absolute;
     width: 260px;
-    right: 350px;
+    right: 320px;
     top: 75px;
     background: rgba(255,255,235,0.6);
     padding: 10px;
@@ -133,7 +132,7 @@ body {
     height: 90px;
     transform: rotate(-0.5deg);
 }
-#woods {
+#instruments {
     width: 200px;
     height: 200px;    
 }
@@ -172,7 +171,6 @@ body {
     box-shadow: 0 0 10px #fff;
     padding: 8px;
 }
-
 #gameRules {
     margin: 0 auto;
     width: 800px;
@@ -190,18 +188,18 @@ body {
     border: none;
     padding: 5px;
 }
-
 #gameRules ul {
     margin-left: 30px;    
 }
 #gameRules button {
-    padding: 5px 10px;
+    padding: 6px 10px;
     border: none;
     border-radius: 3px;
     text-align: center;
     background: #E12D09;
     color: white; 
     text-transform: uppercase;  
+    margin-top: 20px;
 }
 #gameRules button:hover {
     
@@ -211,8 +209,6 @@ body {
     color: #409C18;   
     
 }
-
-
 #journalTable {
     width: 100%;    
 }
@@ -230,7 +226,6 @@ body {
 .lose {
     color: #C20520;
 }
-
 #stoveRigth {
     position: absolute;
     left: 632px;

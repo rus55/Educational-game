@@ -202,7 +202,7 @@ function drawDoor() {
     calcPrice();    
 }
 
-//? - если элемент существует, то идем дальше. Если нет, то все, что справа не выполняется(т.е remove не применяется).
+//если элемент существует, то идем дальше. Если нет, то все, что справа не выполняется(т.е remove не применяется).
 let formShelvElem = document.querySelector('#formShelv');
 formShelvElem.addEventListener('change', drawFormShelv);
 function drawFormShelv() {

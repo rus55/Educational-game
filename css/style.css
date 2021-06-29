@@ -1,6 +1,6 @@
 @font-face {
     font-family: "fontawesome-webfont"; 
-    src: url("./fonts/fontawesome-webfont.ttf") format("truetype"); 
+    src: url("../fonts/fontawesome-webfont.ttf") format("truetype"); 
 } 
 /* Обнуление */
 * {
@@ -64,7 +64,7 @@ li.parent {
     color: #fff;
 }
 .calc__step {
-    width: 80%;
+    width: 85%;
 }
 .calc__step ul li::after {
     content: '\f061';
@@ -72,7 +72,10 @@ li.parent {
     color: #999999;
     display: inline-block;
     font-size: 14px;    
-    padding-left: 10px;
+    padding-left: 4px;
+    float: right;
+    margin-right: 7px;
+    margin-top: 3px;
 }
 .calc__step ul li:last-child::after {
     display: none;
@@ -83,7 +86,7 @@ li.parent {
     justify-content: space-between;
 }
 .calc__price {
-    width: 20%;
+    width: 15%;
     color: #2c8900;    
     font-size: 20px;
     font-weight: 700;
