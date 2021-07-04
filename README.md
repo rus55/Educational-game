@@ -1,4 +1,4 @@
-ПОПРОБУЙТЕ СЫГРАТЬ: https://rus55.github.io/bani/
+ПОПРОБУЙТЕ СЫГРАТЬ: https://rus55.github.io/Educational-game/
 
 Программа обучения растопки печи в бане
 
